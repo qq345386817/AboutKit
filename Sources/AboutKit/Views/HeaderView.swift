@@ -24,8 +24,10 @@ struct HeaderView: View {
                 .font(.headline)
                 .padding(.top)
 
-            Text(app.developer.name)
-                .foregroundStyle(.secondary)
+            if !app.developer.name.isEmpty {
+                Text(app.developer.name)
+                    .foregroundStyle(.secondary)
+            }
         }
         .multilineTextAlignment(.center)
         .frame(maxWidth: .infinity)
@@ -74,7 +76,7 @@ struct HeaderView: View {
         #if os(macOS) || os(watchOS)
         return 64
         #elseif os(tvOS)
-        return 300
+        return 180 // 300
         #else
         return 100
         #endif

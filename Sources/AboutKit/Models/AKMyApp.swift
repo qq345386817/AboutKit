@@ -29,6 +29,9 @@ public struct AKMyApp: AKApp, Sendable {
 
     /// An `Optional<URL>` containing the app's website.
     public let websiteURL: URL?
+    
+    /// An `Optional<URL>` containing the app's Q&A.
+    public let helpURL: URL?
 
     /// An array of `AKProfile` containing the social media pages for the app.
     public let profiles: [AKProfile]
@@ -55,6 +58,7 @@ public struct AKMyApp: AKApp, Sendable {
     ///   - developer: A custom `AKDeveloper` struct containing details about the developer of the app.
     ///   - email: An `Optional<String>` containing the email address to contact the app's support.
     ///   - websiteURL: An `Optional<URL>` containing the app's website.
+    ///   - helpURL: An `Optional<URL>` containing the app's Q&A.
     ///   - profiles: An `Optional` array of `AKProfile` containing the social media pages for the app.
     ///   - privacyPolicyURL: An `Optional<URL>` containing the privacy policy for the app.
     ///   - termsOfUseURL: An `Optional<URL>` containing the terms of use for the app.
@@ -67,6 +71,7 @@ public struct AKMyApp: AKApp, Sendable {
         developer: AKDeveloper,
         email: String?,
         websiteURL: URL?,
+        helpURL: URL?,
         profiles: [AKProfile]?,
         privacyPolicyURL: URL?,
         termsOfUseURL: URL?,
@@ -79,6 +84,7 @@ public struct AKMyApp: AKApp, Sendable {
         self.developer = developer
         self.email = email
         self.websiteURL = websiteURL
+        self.helpURL = helpURL
         self.profiles = profiles ?? []
         self.privacyPolicyURL = privacyPolicyURL
         self.termsOfUseURL = termsOfUseURL
@@ -94,6 +100,7 @@ public struct AKMyApp: AKApp, Sendable {
         developer: .example,
         email: "exampleapp@example.com",
         websiteURL: URL(string: "https://www.example.com")!,
+        helpURL: nil,
         profiles: [.example],
         privacyPolicyURL: URL(string: "https://www.example.com/privacy-policy")!,
         termsOfUseURL: URL(string: "https://www.example.com/terms-of-use")!,

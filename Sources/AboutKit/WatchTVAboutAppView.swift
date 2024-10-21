@@ -31,7 +31,7 @@ public struct AboutAppView: View {
                 Section {
                     if let email = configuration.app.email {
                         ItemLabel(
-                            LocalizedStrings.email,
+                            LocalizedStrings.emailUs,
                             details: email
                         )
                     }

@@ -5,13 +5,16 @@
 //  Created by Adam Foot on 29/09/2023.
 //
 
-import Foundation
+import SwiftUI
 
 /// A custom struct containing details for AboutKit.
 public struct AKConfiguration: Sendable {
     
     /// A custom struct of type `AKMyApp` containing details about the current app.
     public let app: AKMyApp
+    
+    public let showPurchase: AKShowOption
+    @Binding public var purchasing: Bool
 
     /// An array of `AKOtherApp` that contains details about other apps the developer owns.
     public let otherApps: [AKOtherApp]
@@ -33,12 +36,16 @@ public struct AKConfiguration: Sendable {
         app: AKMyApp,
         otherApps: [AKOtherApp],
         showShareApp: AKShowOption = .always,
-        showWriteReview: AKShowOption = .always
+        showWriteReview: AKShowOption = .always,
+        showPurchase: AKShowOption = .always,
+        purchasing: Binding<Bool>
     ) {
         self.app = app
         self.otherApps = otherApps
         self.showShareApp = showShareApp
         self.showWriteReview = showWriteReview
+        self.showPurchase = showPurchase
+        self._purchasing = purchasing
     }
 
     /// An example `AKConfiguration` to be used in SwiftUI previews.
@@ -46,6 +53,8 @@ public struct AKConfiguration: Sendable {
         app: .example,
         otherApps: [.example],
         showShareApp: .always,
-        showWriteReview: .always
+        showWriteReview: .always,
+        showPurchase: .always,
+        purchasing: .constant(false)
     )
 }

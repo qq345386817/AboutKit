@@ -74,7 +74,7 @@ struct OtherAppRowView_Previews: PreviewProvider {
         Form {
             OtherAppRowView(AKOtherApp.example)
         }
-        .formStyle(.grouped)
+        .modifier(FormStyleModifier())
     }
 }
 #endif

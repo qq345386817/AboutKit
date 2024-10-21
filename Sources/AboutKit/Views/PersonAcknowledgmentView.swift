@@ -70,7 +70,7 @@ struct PersonAcknowledgementView: View {
             }
         }
         #if os(macOS)
-        .formStyle(.grouped)
+        .modifier(FormStyleModifier())
         #endif
         .navigationTitle(acknowledgment.name)
         #if os(iOS) || os(visionOS) || os(watchOS)

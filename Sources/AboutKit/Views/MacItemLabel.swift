@@ -37,7 +37,7 @@ struct ItemLabel_Previews: PreviewProvider {
         Form {
             ItemLabel("Title", actionTitle: "Action") {}
         }
-        .formStyle(.grouped)
+        .modifier(FormStyleModifier())
     }
 }
 #endif

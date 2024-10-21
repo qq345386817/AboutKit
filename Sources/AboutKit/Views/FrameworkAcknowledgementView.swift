@@ -70,7 +70,7 @@ struct FrameworkAcknowledgementView: View {
             }
         }
         #if os(macOS)
-        .formStyle(.grouped)
+        .modifier(FormStyleModifier())
         #endif
         .navigationTitle(acknowledgment.name)
         #if os(iOS) || os(watchOS)

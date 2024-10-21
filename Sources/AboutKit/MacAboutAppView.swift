@@ -34,10 +34,19 @@ public struct AboutAppView: View {
             if configuration.app.email != nil || configuration.app.websiteURL != nil {
                 Section {
                     ItemLabel(
-                        LocalizedStrings.email,
+                        LocalizedStrings.emailUs,
                         actionTitle: LocalizedStrings.contactDeveloper,
                         action: sendMail
                     )
+                    
+                    if let helpURL = configuration.app.helpURL {
+                        ItemLabel(
+                            LocalizedStrings.helpCenter,
+                            actionTitle: LocalizedStrings.openHelpCenter
+                        ) {
+                            openURL(helpURL)
+                        }
+                    }
                     
                     if let websiteURL = configuration.app.websiteURL {
                         ItemLabel(
@@ -84,16 +93,18 @@ public struct AboutAppView: View {
 
             if configuration.showShareApp.isVisible || configuration.showWriteReview.isVisible {
                 Section {
-                    if configuration.showShareApp.isVisible {
-                        HStack {
-                            Text(LocalizedStrings.shareApp)
-                            Spacer()
-
-                            ShareLink(
-                                item: configuration.app.appStoreShareURL,
-                                message: Text(String(localized: "Check out \(configuration.app.name) on the App Store!", bundle: .module))
-                            ) {
-                                Text(LocalizedStrings.share)
+                    if #available(iOS 16.0, macOS 13.0, *) {
+                        if configuration.showShareApp.isVisible {
+                            HStack {
+                                Text(LocalizedStrings.shareApp)
+                                Spacer()
+                                
+                                ShareLink(
+                                    item: configuration.app.appStoreShareURL,
+                                    message: Text(String(localized: "Check out \(configuration.app.name) on the App Store!", bundle: .module))
+                                ) {
+                                    Text(LocalizedStrings.share)
+                                }
                             }
                         }
                     }
@@ -152,6 +163,17 @@ public struct AboutAppView: View {
                     }
                 }
             }
+            
+            if configuration.showPurchase.isVisible {
+                Section {
+                    ItemLabel(
+                        LocalizedStrings.purchasePro,
+                        actionTitle: LocalizedStrings.purchase
+                    ) {
+                        NotificationCenter.default.post(name: Notification.Name.purchasingNotification, object: nil)
+                    }
+                }
+            }
 
             if configuration.otherApps.isEmpty == false {
                 Section {
@@ -169,7 +191,7 @@ public struct AboutAppView: View {
                 }
             }
         }
-        .formStyle(.grouped)
+        .modifier(FormStyleModifier())
         .navigationTitle(LocalizedStrings.aboutApp)
         .sheet(isPresented: $showingAcknowledgements) {
             if let acknowledgements = configuration.app.acknowledgements {

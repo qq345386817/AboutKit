@@ -38,9 +38,20 @@ public struct AboutAppView: View {
                 Section {
                     Button(action: sendMail) {
                         ItemLabel(
-                            LocalizedStrings.email,
+                            LocalizedStrings.emailUs,
                             systemImage: "envelope"
                         )
+                    }
+                    
+                    if let helpURL = configuration.app.helpURL {
+                        Button {
+                            openURL(helpURL)
+                        } label: {
+                            ItemLabel(
+                                LocalizedStrings.helpCenter,
+                                systemImage: "questionmark.circle"
+                            )
+                        }
                     }
                     
                     if let websiteURL = configuration.app.websiteURL {
@@ -177,6 +188,19 @@ public struct AboutAppView: View {
                         ItemLabel(
                             LocalizedStrings.testFlight,
                             systemImage: "fan"
+                        )
+                    }
+                }
+            }
+            
+            if configuration.showPurchase.isVisible {
+                Section {
+                    Button {
+                        configuration.purchasing = true
+                    } label: {
+                        ItemLabel(
+                            LocalizedStrings.purchasePro,
+                            systemImage: "purchased.circle"
                         )
                     }
                 }

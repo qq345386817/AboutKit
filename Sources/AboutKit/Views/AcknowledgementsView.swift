@@ -18,13 +18,23 @@ struct AcknowledgementsView: View {
 
     var body: some View {
         #if os(macOS)
-        NavigationStack {
-            acknowledgementsForm
-                .toolbar {
-                    doneToolbarItem
-                }
+        if #available(iOS 16.0, macOS 13.0, *) {
+            NavigationStack {
+                acknowledgementsForm
+                    .toolbar {
+                        doneToolbarItem
+                    }
+            }
+            .frame(minWidth: 400, minHeight: 300)
+        } else {
+            NavigationView {
+                acknowledgementsForm
+                    .toolbar {
+                        doneToolbarItem
+                    }
+            }
+            .frame(minWidth: 400, minHeight: 300)
         }
-        .frame(minWidth: 400, minHeight: 300)
 
         #else
         acknowledgementsForm
@@ -74,7 +84,7 @@ struct AcknowledgementsView: View {
             }
         }
         #if os(macOS)
-        .formStyle(.grouped)
+        .modifier(FormStyleModifier())
         #endif
         .navigationTitle(LocalizedStrings.acknowledgements)
         #if os(iOS) || os(visionOS) || os(watchOS)
