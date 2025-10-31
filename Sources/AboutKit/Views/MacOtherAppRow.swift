@@ -21,7 +21,7 @@ struct OtherAppRowView: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            appIcon
+            AppIconImageView(for: otherApp, at: .init(width: 32, height: 32))
 
             Text(otherApp.name)
                 .font(.headline)
@@ -31,28 +31,6 @@ struct OtherAppRowView: View {
 
             viewOnAppStoreButton
         }
-        .task {
-            await loadAppIcon()
-        }
-    }
-
-    private var appIcon: some View {
-        ZStack {
-            Color(.controlBackgroundColor)
-
-            if let appIcon = otherApp.appIcon {
-                Image(nsImage: appIcon)
-                    .resizable()
-                    .scaledToFit()
-
-            } else if let appIconURL = appIconURL {
-                RemoteImageView(url: appIconURL)
-                    .scaledToFit()
-            }
-        }
-        .frame(width: 32, height: 32)
-        .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
-        .accessibilityHidden(true)
     }
 
     private var viewOnAppStoreButton: some View {
@@ -61,20 +39,12 @@ struct OtherAppRowView: View {
         }
         .accessibilityLabel(String(localized: "View \(otherApp.name) in the App Store", bundle: .module))
     }
-
-    private func loadAppIcon() async {
-        if otherApp.appIcon == nil {
-            appIconURL = await AppIconNetworkManager.shared.fetchURL(for: otherApp)
-        }
-    }
 }
 
-struct OtherAppRowView_Previews: PreviewProvider {
-    static var previews: some View {
-        Form {
-            OtherAppRowView(AKOtherApp.example)
-        }
-        .modifier(FormStyleModifier())
+#Preview {
+    Form {
+        OtherAppRowView(AKOtherApp.example)
     }
+    .formStyle(.grouped)
 }
 #endif
