@@ -10,7 +10,8 @@ import SwiftUI
 
 /// A SwiftUI `View` which displays attributes and links relating to an app.
 public struct AboutAppView: View {
-    @Environment(\.openURL) var openURL
+    @Environment(\.openURL) private var openURL
+    @Environment(\.openWebView) private var open
 
     /// A custom struct of type `AKConfiguration` containing details for AboutKit.
     private let configuration: AKConfiguration
@@ -44,7 +45,7 @@ public struct AboutAppView: View {
                             LocalizedStrings.helpCenter,
                             actionTitle: LocalizedStrings.openHelpCenter
                         ) {
-                            openURL(helpURL)
+                            open(helpURL)
                         }
                     }
                     
@@ -127,7 +128,7 @@ public struct AboutAppView: View {
                             LocalizedStrings.privacyPolicy,
                             actionTitle: LocalizedStrings.viewPrivacyPolicy
                         ) {
-                            openURL(privacyPolicyURL)
+                            open(privacyPolicyURL)
                         }
                     }
 
@@ -136,7 +137,7 @@ public struct AboutAppView: View {
                             LocalizedStrings.termsOfUse,
                             actionTitle: LocalizedStrings.viewTermsOfUse
                         ) {
-                            openURL(termsOfUseURL)
+                            open(termsOfUseURL)
                         }
                     }
 
@@ -198,9 +199,9 @@ public struct AboutAppView: View {
                 AcknowledgementsView(acknowledgements)
             }
         }
+        .presentsWebView()
     }
 
-    
     // MARK: - Mail
 
     private func sendMail() {

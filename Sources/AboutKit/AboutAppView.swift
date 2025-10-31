@@ -11,7 +11,8 @@ import MessageUI
 
 /// A SwiftUI `View` which displays attributes and links relating to an app.
 public struct AboutAppView: View {
-    @Environment(\.openURL) var openURL
+    @Environment(\.openURL) private var openURL
+    @Environment(\.openWebView) private var open
 
     /// A custom struct of type `AKConfiguration` containing details for AboutKit.
     private let configuration: AKConfiguration
@@ -42,7 +43,7 @@ public struct AboutAppView: View {
                     
                     if let helpURL = configuration.app.helpURL {
                         Button {
-                            openURL(helpURL)
+                            open(helpURL)
                         } label: {
                             ItemLabel(
                                 LocalizedStrings.helpCenter,
@@ -131,7 +132,7 @@ public struct AboutAppView: View {
                 Section {
                     if let privacyPolicyURL = configuration.app.privacyPolicyURL {
                         Button {
-                            openURL(privacyPolicyURL)
+                            open(privacyPolicyURL)
                         } label: {
                             ItemLabel(
                                 LocalizedStrings.privacyPolicy,
@@ -142,7 +143,7 @@ public struct AboutAppView: View {
 
                     if let termsOfUseURL = configuration.app.termsOfUseURL {
                         Button {
-                            openURL(termsOfUseURL)
+                            open(termsOfUseURL)
                         } label: {
                             ItemLabel(
                                 LocalizedStrings.termsOfUse,
@@ -212,8 +213,8 @@ public struct AboutAppView: View {
             MailView(app: configuration.app, debugDetails: AboutKit.debugDetails)
                 .edgesIgnoringSafeArea(.all)
         }
+        .presentsWebView()
     }
-
 
     // MARK: - Mail
 
