@@ -38,11 +38,13 @@ struct WebViewPresenter: ViewModifier {
     @Environment(\.openURL) private var openURL
     
     @State private var webViewURL: URL?
+    @State private var isWebViewNavigationActive = false
 
     @MainActor
     private func open(_ url: URL) {
         if #available(iOS 26.0, macOS 26.0, *) {
             self.webViewURL = url
+            self.isWebViewNavigationActive = true
         } else {
             openURL(url)
         }
@@ -51,16 +53,23 @@ struct WebViewPresenter: ViewModifier {
     func body(content: Content) -> some View {
         content
             .environment(\.openWebView, OpenWebViewAction(action: open))
-            .sheet(item: $webViewURL) { url in
-                if #available(iOS 26.0, macOS 26.0, *) {
-                    AKWebView(url: url)
+            .background(
+                Group {
+                    if let url = webViewURL {
+                        if #available(iOS 26.0, macOS 26.0, *) {
+                            NavigationLink(
+                                destination: AKWebView(url: url),
+                                isActive: $isWebViewNavigationActive
+                            ) {
+                                EmptyView()
+                            }
+                        } else {
+                            // Fallback on earlier versions
+                        }
+                    }
                 }
-            }
+            )
     }
-}
-
-extension URL: @retroactive Identifiable {
-    public var id: String { self.absoluteString }
 }
 
 extension View {
