@@ -132,7 +132,7 @@ public struct AboutAppView: View {
                 Section {
                     if let privacyPolicyURL = configuration.app.privacyPolicyURL {
                         Button {
-                            open(privacyPolicyURL)
+                            openURL(privacyPolicyURL)
                         } label: {
                             ItemLabel(
                                 LocalizedStrings.privacyPolicy,
@@ -143,7 +143,7 @@ public struct AboutAppView: View {
 
                     if let termsOfUseURL = configuration.app.termsOfUseURL {
                         Button {
-                            open(termsOfUseURL)
+                            openURL(termsOfUseURL)
                         } label: {
                             ItemLabel(
                                 LocalizedStrings.termsOfUse,

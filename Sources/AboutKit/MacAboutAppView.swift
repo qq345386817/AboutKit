@@ -128,7 +128,7 @@ public struct AboutAppView: View {
                             LocalizedStrings.privacyPolicy,
                             actionTitle: LocalizedStrings.viewPrivacyPolicy
                         ) {
-                            open(privacyPolicyURL)
+                            openURL(privacyPolicyURL)
                         }
                     }
 
@@ -137,7 +137,7 @@ public struct AboutAppView: View {
                             LocalizedStrings.termsOfUse,
                             actionTitle: LocalizedStrings.viewTermsOfUse
                         ) {
-                            open(termsOfUseURL)
+                            openURL(termsOfUseURL)
                         }
                     }
 

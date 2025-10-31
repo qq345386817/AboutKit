@@ -34,41 +34,32 @@ extension EnvironmentValues {
 
 /// A view modifier that adds the necessary components to present a URL
 /// within the app using a WebView, with appropriate platform and OS version checks.
-struct WebViewPresenter: ViewModifier {
+public struct WebViewPresenter: ViewModifier {
     @Environment(\.openURL) private var openURL
     
     @State private var webViewURL: URL?
-    @State private var isWebViewNavigationActive = false
+    @State private var isWebViewPresented = false
 
     @MainActor
     private func open(_ url: URL) {
         if #available(iOS 26.0, macOS 26.0, *) {
             self.webViewURL = url
-            self.isWebViewNavigationActive = true
+            self.isWebViewPresented = true
         } else {
             openURL(url)
         }
     }
 
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .environment(\.openWebView, OpenWebViewAction(action: open))
-            .background(
-                Group {
-                    if let url = webViewURL {
-                        if #available(iOS 26.0, macOS 26.0, *) {
-                            NavigationLink(
-                                destination: AKWebView(url: url),
-                                isActive: $isWebViewNavigationActive
-                            ) {
-                                EmptyView()
-                            }
-                        } else {
-                            // Fallback on earlier versions
-                        }
+            .sheet(isPresented: $isWebViewPresented) {
+                if let url = webViewURL {
+                    if #available(iOS 26.0, macOS 26.0, *) {
+                        AKWebView(url: url)
                     }
                 }
-            )
+            }
     }
 }
 
@@ -76,7 +67,7 @@ extension View {
     /// Adds the capability to present a URL in an in-app WebView.
     ///
     /// Use the `openWebView` environment action to trigger the presentation.
-    func presentsWebView() -> some View {
+    public func presentsWebView() -> some View {
         self.modifier(WebViewPresenter())
     }
 }
