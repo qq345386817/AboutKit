@@ -43,7 +43,7 @@ public struct AboutAppView: View {
                     
                     if let helpURL = configuration.app.helpURL {
                         Button {
-                            open(helpURL)
+                            openURL(helpURL)
                         } label: {
                             ItemLabel(
                                 LocalizedStrings.helpCenter,

@@ -45,7 +45,7 @@ public struct AboutAppView: View {
                             LocalizedStrings.helpCenter,
                             actionTitle: LocalizedStrings.openHelpCenter
                         ) {
-                            open(helpURL)
+                            openURL(helpURL)
                         }
                     }
                     
