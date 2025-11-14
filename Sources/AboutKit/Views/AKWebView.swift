@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+#if !os(tvOS)
 import WebKit
 
 @available(iOS 26.0, macOS 26.0, *)
@@ -35,3 +36,15 @@ struct AKWebView: View {
         }
     }
 }
+
+#else
+
+struct AKWebView: View {
+    let url: URL
+
+    var body: some View {
+        Text("Not Available.")
+    }
+}
+
+#endif
