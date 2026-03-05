@@ -26,6 +26,14 @@ struct HeaderView: View {
                 Text(app.developer.name)
                     .foregroundStyle(.secondary)
             }
+            
+            if let desc = app.description, !desc.isEmpty {
+                Text(desc)
+                    .font(.body)
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal)
+            }
         }
         .multilineTextAlignment(.center)
         .frame(maxWidth: .infinity)

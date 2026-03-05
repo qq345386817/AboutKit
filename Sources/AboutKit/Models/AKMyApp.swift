@@ -16,6 +16,8 @@ public struct AKMyApp: AKApp, Sendable {
 
     /// A `String` containing the appʼs name.
     public let name: String
+    
+    public let description: String?
 
     /// An `Optional<PlatformImage>` containing the app icon.
     /// If an image is not specified, the app icon will be fetched from the App Store.
@@ -67,6 +69,7 @@ public struct AKMyApp: AKApp, Sendable {
     public init(
         id: String,
         name: String,
+        description: String?,
         appIcon: PlatformImage?,
         developer: AKDeveloper,
         email: String?,
@@ -80,6 +83,7 @@ public struct AKMyApp: AKApp, Sendable {
     ) {
         self.id = id
         self.name = name
+        self.description = description
         self.appIcon = appIcon
         self.developer = developer
         self.email = email
@@ -96,6 +100,7 @@ public struct AKMyApp: AKApp, Sendable {
     public static let example = AKMyApp(
         id: "123456789",
         name: "Example",
+        description: nil,
         appIcon: nil,
         developer: .example,
         email: "exampleapp@example.com",
